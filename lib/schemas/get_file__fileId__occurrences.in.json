@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "fileId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

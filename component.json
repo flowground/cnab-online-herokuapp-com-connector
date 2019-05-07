@@ -1,0 +1,99 @@
+{
+    "title": "Cnab Online",
+    "description": "Processe arquivos de retorno CNAB",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/cnab-online.herokuapp.com/1.0.0/swagger.json",
+    "envVars": {},
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://cnab-online.herokuapp.com/v1",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            }
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "post_file": {
+            "main": "./lib/actions/post_file.js",
+            "title": "Faz o upload de um arquivo",
+            "description": "Processa um arquivo CNAB para obter informacoes sobre o mesmo. Retorna um ID temporario para o mesmo.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/post_file.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "get_file__fileId_": {
+            "main": "./lib/actions/get_file__fileId_.js",
+            "title": "Retorna as informacoes basicas de um arquivo previamente processado",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_file__fileId_.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "get_file__fileId__lines": {
+            "main": "./lib/actions/get_file__fileId__lines.js",
+            "title": "Retorna todas as linhas e seus respectivos campos (de forma nao processada, apenas indicando os campos reconhecidos)",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_file__fileId__lines.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "get_file__fileId__occurrences": {
+            "main": "./lib/actions/get_file__fileId__occurrences.js",
+            "title": "Retorna as informacoes de baixa de boletos e outros tipos de ocorrencias",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_file__fileId__occurrences.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}
